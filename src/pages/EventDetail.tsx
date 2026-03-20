@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { mockEvents } from "@/data/events";
+import { useEvents } from "@/hooks/use-events";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Calendar, MapPin, Users, CheckCircle2, ArrowLeft, Phone } from "lucide-react";

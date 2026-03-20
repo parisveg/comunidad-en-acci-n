@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { mockEvents } from "@/data/events";
+import { useEvents } from "@/hooks/use-events";
 import EventCard from "@/components/EventCard";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
