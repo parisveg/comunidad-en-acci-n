@@ -39,6 +39,9 @@ const Index = () => {
                 <Link to="/eventos">Convertirme en voluntario</Link>
               </Button>
             </div>
+            <div className="mt-12 max-w-4xl mx-auto">
+              <img src={heroImage} alt="Voluntarios trabajando juntos en comunidad" className="rounded-2xl shadow-xl w-full object-cover max-h-[360px]" />
+            </div>
           </motion.div>
         </div>
       </section>
