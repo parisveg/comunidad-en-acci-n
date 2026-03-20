@@ -14,6 +14,7 @@ export interface VolunteerEvent {
   volunteersRegistered: number;
   volunteersNeeded: number;
   activities: EventActivity[];
+  registeredPhones?: string[];
   image?: string;
 }
 
