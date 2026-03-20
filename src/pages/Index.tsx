@@ -4,6 +4,7 @@ import { Heart, Users, Sparkles } from "lucide-react";
 import { mockEvents } from "@/data/events";
 import EventCard from "@/components/EventCard";
 import { motion } from "framer-motion";
+import heroImage from "@/assets/hero-volunteers.jpg";
 
 const Index = () => {
   const upcomingEvents = mockEvents.slice(0, 3);
