@@ -5,9 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
 const Events = () => {
+  const [events] = useEvents();
   const [search, setSearch] = useState("");
 
-  const filtered = mockEvents.filter(
+  const filtered = events.filter(
     (e) =>
       e.title.toLowerCase().includes(search.toLowerCase()) ||
       e.location.toLowerCase().includes(search.toLowerCase())

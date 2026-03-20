@@ -12,8 +12,8 @@ import { toast } from "sonner";
 import { motion } from "framer-motion";
 
 const EventDetail = () => {
-  const { id } = useParams();
-  const event = mockEvents.find((e) => e.id === id);
+  const [events] = useEvents();
+  const event = events.find((e) => e.id === id);
   const [phone, setPhone] = useState("");
   const [submitted, setSubmitted] = useState(false);
 

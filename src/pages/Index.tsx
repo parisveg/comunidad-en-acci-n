@@ -7,7 +7,8 @@ import { motion } from "framer-motion";
 import heroImage from "@/assets/hero-volunteers.jpg";
 
 const Index = () => {
-  const upcomingEvents = mockEvents.slice(0, 3);
+  const [events] = useEvents();
+  const upcomingEvents = events.slice(0, 3);
 
   return (
     <div>

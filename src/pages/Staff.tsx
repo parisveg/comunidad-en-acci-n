@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dialog";
 
 const Staff = () => {
-  const [events, setEvents] = useState<VolunteerEvent[]>([...mockEvents]);
+  const [events, setEvents] = useEvents();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<VolunteerEvent | null>(null);
 
