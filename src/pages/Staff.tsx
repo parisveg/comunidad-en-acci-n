@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { mockEvents, VolunteerEvent, EventActivity } from "@/data/events";
+import { VolunteerEvent, EventActivity } from "@/data/events";
+import { useEvents } from "@/hooks/use-events";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,7 +16,7 @@ import {
 } from "@/components/ui/dialog";
 
 const Staff = () => {
-  const [events, setEvents] = useState<VolunteerEvent[]>([...mockEvents]);
+  const [events, setEvents] = useEvents();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<VolunteerEvent | null>(null);
 

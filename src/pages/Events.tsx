@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { mockEvents } from "@/data/events";
+import { useEvents } from "@/hooks/use-events";
 import EventCard from "@/components/EventCard";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
 const Events = () => {
+  const [events] = useEvents();
   const [search, setSearch] = useState("");
 
-  const filtered = mockEvents.filter(
+  const filtered = events.filter(
     (e) =>
       e.title.toLowerCase().includes(search.toLowerCase()) ||
       e.location.toLowerCase().includes(search.toLowerCase())

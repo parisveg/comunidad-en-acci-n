@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { mockEvents } from "@/data/events";
+import { useEvents } from "@/hooks/use-events";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Calendar, MapPin, Users, CheckCircle2, ArrowLeft, Phone } from "lucide-react";
@@ -13,7 +13,8 @@ import { motion } from "framer-motion";
 
 const EventDetail = () => {
   const { id } = useParams();
-  const event = mockEvents.find((e) => e.id === id);
+  const [events] = useEvents();
+  const event = events.find((e) => e.id === id);
   const [phone, setPhone] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
