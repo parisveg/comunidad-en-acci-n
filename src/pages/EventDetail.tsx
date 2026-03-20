@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { useEvents } from "@/hooks/use-events";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { Calendar, MapPin, Users, CheckCircle2, ArrowLeft, Phone } from "lucide-react";
+import { Calendar, MapPin, Users, CheckCircle2, ArrowLeft, Phone, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
@@ -13,10 +13,9 @@ import { motion } from "framer-motion";
 
 const EventDetail = () => {
   const { id } = useParams();
-  const [events] = useEvents();
+  const [events, setEvents] = useEvents();
   const event = events.find((e) => e.id === id);
   const [phone, setPhone] = useState("");
-  const [submitted, setSubmitted] = useState(false);
 
   if (!event) {
     return (
@@ -29,17 +28,49 @@ const EventDetail = () => {
     );
   }
 
+  const registeredPhones = event.registeredPhones ?? [];
   const dateObj = new Date(event.date + "T" + event.time);
   const progress = (event.volunteersRegistered / event.volunteersNeeded) * 100;
 
+  // Check if the current phone input is already registered
+  const currentPhoneRegistered = phone.trim().length >= 7 && registeredPhones.includes(phone.trim());
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!phone.trim() || phone.trim().length < 7) {
+    const trimmed = phone.trim();
+    if (!trimmed || trimmed.length < 7) {
       toast.error("Por favor ingresa un número telefónico válido.");
       return;
     }
-    setSubmitted(true);
+    if (registeredPhones.includes(trimmed)) {
+      toast.error("Este número ya está registrado en este evento.");
+      return;
+    }
+    setEvents(events.map((ev) =>
+      ev.id === id
+        ? {
+            ...ev,
+            volunteersRegistered: ev.volunteersRegistered + 1,
+            registeredPhones: [...(ev.registeredPhones ?? []), trimmed],
+          }
+        : ev
+    ));
     toast.success("¡Gracias por sumarte!");
+  };
+
+  const handleCancel = () => {
+    const trimmed = phone.trim();
+    setEvents(events.map((ev) =>
+      ev.id === id
+        ? {
+            ...ev,
+            volunteersRegistered: Math.max(0, ev.volunteersRegistered - 1),
+            registeredPhones: (ev.registeredPhones ?? []).filter((p) => p !== trimmed),
+          }
+        : ev
+    ));
+    setPhone("");
+    toast.success("Tu registro ha sido cancelado.");
   };
 
   return (
@@ -103,13 +134,17 @@ const EventDetail = () => {
           {/* Registration */}
           <Card className="bg-card border">
             <CardContent className="p-6">
-              {submitted ? (
+              {currentPhoneRegistered ? (
                 <div className="text-center py-4">
                   <CheckCircle2 className="h-12 w-12 text-secondary mx-auto mb-3" />
-                  <h3 className="font-heading text-xl font-bold mb-2">¡Gracias por sumarte!</h3>
-                  <p className="text-muted-foreground">
+                  <h3 className="font-heading text-xl font-bold mb-2">¡Ya estás registrado!</h3>
+                  <p className="text-muted-foreground mb-4">
                     Tu participación ayuda a hacer posible este evento.
                   </p>
+                  <Button variant="destructive" onClick={handleCancel}>
+                    <XCircle className="h-4 w-4 mr-2" />
+                    Cancelar registro
+                  </Button>
                 </div>
               ) : (
                 <>
